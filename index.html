@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>J</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+  <p>J'aime loulou  nono  nini  nana</p>
+  <br/>
+
+  <br/>
+  <form onsubmit="check(event.target.answer.value, event.target)">
+    <span id="number1"></span>
+    +
+    <span id="number2"></span>
+    =
+    <input type="number" name="answer" autofocus/>
+    <input type="submit" value="OK"/>
+  </form>
+
+  <script>
+    const numbers = {}
+    function loadNumbers () {
+      numbers.number1 = Math.floor(Math.random() * 100)
+      document.querySelector('#number1').innerHTML = numbers.number1
+      numbers.number2 = Math.floor(Math.random() * 100)
+      document.querySelector('#number2').innerHTML = numbers.number2
+    }
+    loadNumbers()
+    window.check = function (value, form) {
+      if (value == numbers.number1 + numbers.number2) {
+        alert('OK')
+        loadNumbers()
+      } else {
+        alert('non')
+      }
+      form.reset()
+      event.preventDefault()
+    }
+  </script>
+</body>
+</html>
