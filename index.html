@@ -8,7 +8,10 @@
 <body>
   <p>J'aime loulou  nono  nini  nana</p>
   <br/>
-
+  nombre de mauvaise réponse : <span id="wrongAnswer"></span>
+  <br/>
+  nombre de bonne réponse : <span id="goodAnswer"></span>
+  <br/>
   <br/>
   <form onsubmit="check(event.target.answer.value, event.target)">
     <span id="number1"></span>
@@ -20,21 +23,37 @@
   </form>
 
   <script>
-    const numbers = {}
-    function loadNumbers () {
-      numbers.number1 = Math.floor(Math.random() * 100)
-      document.querySelector('#number1').innerHTML = numbers.number1
-      numbers.number2 = Math.floor(Math.random() * 100)
-      document.querySelector('#number2').innerHTML = numbers.number2
+    let number1
+    let number2
+    let wrongAnswer = 0
+    let goodAnswer = 0
+
+    function load () {
+      updateDisplay()
+      loadNumbers()
     }
-    loadNumbers()
+    function updateDisplay () {
+        document.querySelector('#wrongAnswer').innerHTML = wrongAnswer
+        document.querySelector('#goodAnswer').innerHTML = goodAnswer
+    }
+    function loadNumbers () {
+      number1 = Math.floor(Math.random() * 100)
+      document.querySelector('#number1').innerHTML = number1
+      number2 = Math.floor(Math.random() * 100)
+      document.querySelector('#number2').innerHTML = number2
+    }
+    load();
+
     window.check = function (value, form) {
-      if (value == numbers.number1 + numbers.number2) {
+      if (value == number1 + number2) {
         alert('OK')
+        goodAnswer = goodAnswer + 1
         loadNumbers()
       } else {
         alert('non')
+        wrongAnswer = wrongAnswer + 1
       }
+      updateDisplay()
       form.reset()
       event.preventDefault()
     }
