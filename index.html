@@ -15,7 +15,7 @@
   <br/>
   <form onsubmit="check(event.target.answer.value, event.target)">
     <span id="number1"></span>
-    +
+    <span id="sign"></span>
     <span id="number2"></span>
     =
     <input type="number" name="answer" autofocus/>
@@ -25,27 +25,45 @@
   <script>
     let number1
     let number2
+    let sign
     let wrongAnswer = 0
     let goodAnswer = 0
 
     function load () {
-      updateDisplay()
       loadNumbers()
+      updateDisplay()
     }
+
     function updateDisplay () {
         document.querySelector('#wrongAnswer').innerHTML = wrongAnswer
         document.querySelector('#goodAnswer').innerHTML = goodAnswer
+        document.querySelector('#number1').innerHTML = number1
+        document.querySelector('#number2').innerHTML = number2
+        document.querySelector('#sign').innerHTML = sign
     }
-    function loadNumbers () {
-      number1 = Math.floor(Math.random() * 100)
-      document.querySelector('#number1').innerHTML = number1
-      number2 = Math.floor(Math.random() * 100)
-      document.querySelector('#number2').innerHTML = number2
-    }
-    load();
 
-    window.check = function (value, form) {
-      if (value == number1 + number2) {
+    function getRandumNumber (max, min = 0) {
+      const vMin = +min;
+      const vMax = +max;
+      return Math.floor(Math.random()*(vMax - vMin + 1) + vMin);
+    }
+
+    function loadNumbers () {
+      sign = ['+', '-', 'x'][getRandumNumber(2)]
+      if (sign === 'x') {
+        number1 = getRandumNumber(10)
+        number2 = getRandumNumber(10)
+      } else if (sign === '-') {
+        number1 = getRandumNumber(200)
+        number2 = getRandumNumber(number1)
+      } else if (sign === '+') {
+        number1 = getRandumNumber(1000)
+        number2 = getRandumNumber(1000)
+      }
+    }
+
+    function check (value, form) {
+      if (value == (sign === '+' ? number1 + number2 : sign === '-' ? number1 - number2 : number1 * number2)) {
         alert('OK')
         goodAnswer = goodAnswer + 1
         loadNumbers()
@@ -57,6 +75,9 @@
       form.reset()
       event.preventDefault()
     }
+
+    window.check = check
+    load();
   </script>
 </body>
 </html>
