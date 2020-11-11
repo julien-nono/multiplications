@@ -8,6 +8,9 @@
 <body style="max-width: 300px; margin: auto; font-size: 1.4em;">
   <p>J'aime loulou  nono  nini  nana</p>
   <br/>
+  <span id="time"></span> secondes
+  <br/>
+  <br/>
   nombre de mauvaise réponse : <span id="wrongAnswer"></span>
   <br/>
   nombre de bonne réponse : <span id="goodAnswer"></span>
@@ -28,10 +31,23 @@
     let sign
     let wrongAnswer = 0
     let goodAnswer = 0
+    const startAt = new Date()
+    let idTimeInterval
 
     function load () {
       loadNumbers()
       updateDisplay()
+      idTimeInterval = setInterval(updateTimeDisplay, 300)
+    }
+
+    function stopTime () {
+      clearInterval(idTimeInterval)
+    }
+
+    function updateTimeDisplay () {
+      const now = new Date()
+      const delay = now.getTime() - startAt.getTime()
+      document.querySelector('#time').innerHTML = delay / 1000
     }
 
     function updateDisplay () {
@@ -65,9 +81,12 @@
 
     function check (value, form) {
       if (value == (sign === '+' ? number1 + number2 : sign === '-' ? number1 - number2 : number1 * number2)) {
-        alert('OK')
         goodAnswer = goodAnswer + 1
-        loadNumbers()
+        if (goodAnswer < 30) {
+          loadNumbers()
+        } else {
+          stopTime()
+        }
       } else {
         alert('non')
         wrongAnswer = wrongAnswer + 1
