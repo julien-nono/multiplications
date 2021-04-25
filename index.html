@@ -7,8 +7,8 @@
   <style>
     body {
       background-repeat: no-repeat;
-      background-image: url('./paladium_image.jpg');
-      background-position: top 0 left 35%;
+      background-image: url('./paladium_image_double.jpg');
+      background-position: top center;
       color: #c52525;
       background-color: #212121;
     }
@@ -16,6 +16,9 @@
       position: absolute;
       bottom: 0px;
       font-size: 86px;
+      width: 100%;
+      left: 0;
+      text-align: center;
     }
   </style>
 </head>
@@ -83,8 +86,8 @@
       // sign = ['+', '-', 'x'][getRandumNumber(2)]
       sign = 'x'
       if (sign === 'x') {
-        number1 = [6, 7, 8, 9][getRandumNumber(3)]
-        number2 = [6, 7, 8, 9][getRandumNumber(3)]
+        number1 = [2, 3, 4, 5, 6, 7, 8, 9][getRandumNumber(7)]
+        number2 = [2, 3, 4, 5, 6, 7, 8, 9][getRandumNumber(7)]
       } else if (sign === '-') {
         number1 = getRandumNumber(100)
         number2 = getRandumNumber(number1)
