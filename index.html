@@ -38,7 +38,6 @@
     <span id="number2"></span>
     =
     <input type="number" name="answer" autofocus/>
-    <input type="submit" value="OK"/>
   </form>
 
   <h5>Paladium v7.6</h5>
@@ -82,11 +81,17 @@
       return Math.floor(Math.random()*(vMax - vMin + 1) + vMin);
     }
 
+    const availableNumber1 = [
+      10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
+      20, 21, 22, 23, 24, 25, 26, 27, 28, 29,
+      30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40
+    ].sort(()=> Math.random() - 0.5)
+
     function loadNumbers () {
       // sign = ['+', '-', 'x'][getRandumNumber(2)]
       sign = 'x'
       if (sign === 'x') {
-        number1 = [2, 3, 4, 5, 6, 7, 8, 9][getRandumNumber(7)]
+        number1 = availableNumber1.pop()
         number2 = [2, 3, 4, 5, 6, 7, 8, 9][getRandumNumber(7)]
       } else if (sign === '-') {
         number1 = getRandumNumber(100)
@@ -100,7 +105,7 @@
     function check (value, form) {
       if (value == (sign === '+' ? number1 + number2 : sign === '-' ? number1 - number2 : number1 * number2)) {
         goodAnswer = goodAnswer + 1
-        if (goodAnswer < 30) {
+        if (availableNumber1.length > 0) {
           loadNumbers()
         } else {
           stopTime()
